@@ -76,28 +76,28 @@ def getdate(string_date: Optional[str] = None, parse_day_first: bool = False):
 		)
 
 
-def get_datetime(datetime_str=None):
+def get_datetime(datetime_input=None):
 	from dateutil import parser
 
-	if datetime_str is None:
+	if datetime_input is None:
 		return now_datetime()
 
-	if isinstance(datetime_str, (datetime.datetime, datetime.timedelta)):
-		return datetime_str
+	if isinstance(datetime_input, (datetime.datetime, datetime.timedelta)):
+		return datetime_input
 
-	elif isinstance(datetime_str, (list, tuple)):
-		return datetime.datetime(datetime_str)
+	elif isinstance(datetime_input, (list, tuple)):
+		return datetime.datetime(*datetime_input)
 
-	elif isinstance(datetime_str, datetime.date):
-		return datetime.datetime.combine(datetime_str, datetime.time())
+	elif isinstance(datetime_input, datetime.date):
+		return datetime.datetime.combine(datetime_input, datetime.time())
 
-	if is_invalid_date_string(datetime_str):
+	if is_invalid_date_string(datetime_input):
 		return None
 
 	try:
-		return datetime.datetime.strptime(datetime_str, DATETIME_FORMAT)
+		return datetime.datetime.strptime(datetime_input, DATETIME_FORMAT)
 	except ValueError:
-		return parser.parse(datetime_str)
+		return parser.parse(datetime_input)
 
 
 def get_timedelta(time: Optional[str] = None) -> Optional[datetime.timedelta]:
